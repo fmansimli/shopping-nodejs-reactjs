@@ -1,0 +1,54 @@
+version: "3.4"
+
+services:
+  # myapp:
+  #   build: .
+  #   container_name: myapp
+  #   restart: always
+  #   ports:
+  #     - "3001:3030"
+  #   depends_on:
+  #     - db
+  #     - pgadmin
+  #   environment:
+  #     - NODE_ENV=production
+  #   networks:
+  #     - shopping-net
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: shopdb
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - shopping-net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@test.com
+      PGADMIN_DEFAULT_PASSWORD: pgadminpassword
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - shopping-net
+
+volumes:
+  db-data:
+  pgadmin-data:
+
+networks:
+  shopping-net:
+    driver: bridge

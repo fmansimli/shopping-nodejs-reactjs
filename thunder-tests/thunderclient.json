@@ -1,0 +1,172 @@
+[
+  {
+    "_id": "71ce0754-2ed7-4365-9818-c644bc4b27df",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "49545cdb-5b08-431f-891c-70b399f6391d",
+    "name": "get all",
+    "url": "{{baseURL}}/api/products",
+    "method": "GET",
+    "sortNum": 10000,
+    "created": "2023-04-09T13:54:23.185Z",
+    "modified": "2023-04-09T13:54:40.191Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "2d4ee94e-c463-4178-a26b-0bf9916ae8c4",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "49545cdb-5b08-431f-891c-70b399f6391d",
+    "name": "get by id",
+    "url": "{{baseURL}}/api/products/1",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-04-09T13:54:49.322Z",
+    "modified": "2023-04-09T13:54:55.883Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "d5eef443-6398-4e20-a73c-4ceea5483f1f",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "49545cdb-5b08-431f-891c-70b399f6391d",
+    "name": "create",
+    "url": "{{baseURL}}/api/products",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2023-04-09T13:55:02.855Z",
+    "modified": "2023-04-09T13:58:57.856Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\": \"product 1\",\n  \"description\": \"product 1 desc 1\",\n  \"price\": 12,\n  \"sku\": 15\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "0adf9fd4-f022-4bde-9b8a-c772d0d8d976",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "49545cdb-5b08-431f-891c-70b399f6391d",
+    "name": "update",
+    "url": "{{baseURL}}/api/products/1",
+    "method": "PATCH",
+    "sortNum": 40000,
+    "created": "2023-04-09T13:55:18.226Z",
+    "modified": "2023-04-09T13:59:31.429Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\": \"product 11111\",\n  \"description\": \"product 1111 desc 1111\",\n  \"price\": 122,\n  \"sku\": 155\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "d585b343-6d82-461b-b71c-8afa014f3331",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "49545cdb-5b08-431f-891c-70b399f6391d",
+    "name": "delete",
+    "url": "{{baseURL}}/api/products/1",
+    "method": "DELETE",
+    "sortNum": 50000,
+    "created": "2023-04-09T13:55:57.743Z",
+    "modified": "2023-04-09T14:00:27.421Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "0c07aa85-19c1-438f-bb92-6ac05eefaf8a",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "a0831d6c-0b1f-4181-97b0-e37fc1e96136",
+    "name": "login",
+    "url": "{{baseURL}}/api/auth/login",
+    "method": "POST",
+    "sortNum": 60000,
+    "created": "2023-04-09T14:01:18.746Z",
+    "modified": "2023-04-09T14:52:30.675Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"fmansim@test.com\",\n  \"password\": \"123456\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "1a3ff828-d946-4bf8-a862-7fe626e458a6",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "a0831d6c-0b1f-4181-97b0-e37fc1e96136",
+    "name": "register",
+    "url": "{{baseURL}}/api/auth/register",
+    "method": "POST",
+    "sortNum": 70000,
+    "created": "2023-04-09T14:02:14.490Z",
+    "modified": "2023-04-09T14:51:11.859Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"fmansim@test.com\",\n  \"password\": \"123456\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "9dc51f5e-42d4-4439-aa8d-2bdad1bc6823",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "63701f16-96c8-4a10-8035-feb03ff637c1",
+    "name": "create",
+    "url": "{{baseURL}}/api/users",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2023-04-09T14:35:10.192Z",
+    "modified": "2023-04-09T14:43:46.741Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"fmansimli@test.com\",\n  \"password\": \"123456\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "14469709-827f-4551-8848-f363714b84d6",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "63701f16-96c8-4a10-8035-feb03ff637c1",
+    "name": "update",
+    "url": "{{baseURL}}/api/users/1",
+    "method": "PATCH",
+    "sortNum": 40000,
+    "created": "2023-04-09T14:35:10.193Z",
+    "modified": "2023-04-09T14:44:02.716Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"fmansimli@test.com\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "f5ac5c71-3419-49ea-8fbc-faa6d1a29e20",
+    "colId": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "containerId": "63701f16-96c8-4a10-8035-feb03ff637c1",
+    "name": "get all",
+    "url": "{{baseURL}}/api/users",
+    "method": "GET",
+    "sortNum": 50000,
+    "created": "2023-04-09T14:39:15.442Z",
+    "modified": "2023-04-09T14:39:33.769Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]

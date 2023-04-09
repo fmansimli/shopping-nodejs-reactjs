@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "8b231ec9-fb5e-4af9-83af-b950ad2c694e",
+    "name": "shop-node-react",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2023-04-09T13:53:14.545Z",
+    "modified": "2023-04-09T13:53:14.545Z",
+    "data": [
+      {
+        "name": "baseURL",
+        "value": "http://localhost:3000"
+      },
+      {
+        "name": "accessToken",
+        "value": "accessToken"
+      }
+    ]
+  }
+]

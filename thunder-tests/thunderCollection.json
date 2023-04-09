@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "b0deb107-7288-477f-aee9-56160b7cc194",
+    "colName": "shop-node-react",
+    "created": "2023-04-09T13:53:02.468Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "49545cdb-5b08-431f-891c-70b399f6391d",
+        "name": "products",
+        "containerId": "",
+        "created": "2023-04-09T13:54:05.292Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "50bbe60d-b5ed-4bd4-a6fc-bd407135e072",
+        "name": "cart",
+        "containerId": "",
+        "created": "2023-04-09T13:54:13.173Z",
+        "sortNum": 20000
+      },
+      {
+        "_id": "a0831d6c-0b1f-4181-97b0-e37fc1e96136",
+        "name": "auth",
+        "containerId": "",
+        "created": "2023-04-09T14:01:13.138Z",
+        "sortNum": 30000,
+        "settings": {
+          "auth": {
+            "type": "none"
+          }
+        }
+      },
+      {
+        "_id": "63701f16-96c8-4a10-8035-feb03ff637c1",
+        "name": "users",
+        "containerId": "",
+        "created": "2023-04-09T14:35:10.190Z",
+        "sortNum": 15000
+      }
+    ],
+    "settings": {
+      "auth": {
+        "type": "bearer",
+        "bearer": "{{accessToken}}"
+      },
+      "envId": "8b231ec9-fb5e-4af9-83af-b950ad2c694e"
+    }
+  }
+]
