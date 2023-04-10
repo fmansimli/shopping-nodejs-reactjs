@@ -50,6 +50,8 @@ function App() {
     if (result) {
       sessionStorage.removeItem("log");
       localStorage.removeItem("log");
+    } else {
+      sessionStorage.setItem("log", JSON.stringify(log));
     }
   };
 
@@ -101,8 +103,8 @@ function App() {
       <MyModal
         visible={!!log.items.length}
         title="logs.."
-        rightButtonText="don't show again"
-        leftButtonText="ok!"
+        rightButtonText="don't show to anyone again"
+        leftButtonText="don't show to me again"
         onEnded={modalHandler}
       >
         <div className="flex flex-col items-center gap-3">
