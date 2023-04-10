@@ -21,15 +21,12 @@ export class ProductsService {
   async findAll(_query?: QueryProductDto) {
     const { populate, fields } = _query || {};
 
-    const [data, count] = await this.repo.findAndCount(
-      {},
-      {
-        orderBy: { id: 'DESC' },
-        populate: populate as any[],
-        fields: fields as any[],
-      },
-    );
-    return { data, count };
+    const products = await this.repo.findAll({
+      orderBy: { id: 'DESC' },
+      populate: populate as any[],
+      fields: fields as any[],
+    });
+    return products;
   }
 
   async findOne(id: number, _query?: QueryProductDto) {

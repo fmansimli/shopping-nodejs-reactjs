@@ -26,7 +26,7 @@ const LoginPage = () => {
       localStorage.setItem("auth", JSON.stringify(data));
       setAuth({ user: data.user, auth: data.auth });
 
-      navigate("/admin", { replace: true });
+      navigate("/", { replace: true });
     } catch (error: any) {
       toast(error.message, { type: "error" });
     } finally {

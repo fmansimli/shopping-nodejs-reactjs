@@ -7,7 +7,7 @@ export default {
   type: 'postgresql',
   entities: [join(__dirname, '/**/*.entity{.ts,.js}')],
   driver: PostgreSqlDriver,
-  dbName: process.env.DB_NAME,
+  dbName: process.env.DB_NAME || "shopdb",
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,

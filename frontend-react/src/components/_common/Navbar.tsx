@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 import { authState } from "../../store/auth.state";
-import { priceSelector } from "../../store/cart.state";
+import { statisticSelector } from "../../store/cart.state";
 
 import logo from "../../assets/logo.svg";
 
@@ -14,7 +14,8 @@ interface INavbar {
 
 const Navbar: FC<INavbar> = props => {
   const [auth, setAuth] = useRecoilState(authState);
-  const totalPrice = useRecoilValue(priceSelector);
+
+  const { totalItemsCount, totalPrice } = useRecoilValue(statisticSelector);
 
   const logoutHandler = () => {
     setAuth({ user: null, auth: { accessToken: "" } });
@@ -43,7 +44,7 @@ const Navbar: FC<INavbar> = props => {
               className="rounded-full bg-red-500 px-5 py-3 text-white shadow-sm hover:cursor-pointer md:px-8"
               to="/shop/shopping-cart"
             >
-              {totalPrice} $
+              {totalItemsCount} in cart ({totalPrice}) $
             </NavItem>
           </div>
         ) : (

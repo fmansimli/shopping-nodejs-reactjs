@@ -88,7 +88,7 @@
     "method": "POST",
     "sortNum": 60000,
     "created": "2023-04-09T14:01:18.746Z",
-    "modified": "2023-04-09T14:52:30.675Z",
+    "modified": "2023-04-10T04:59:35.768Z",
     "headers": [],
     "params": [],
     "body": {
@@ -96,7 +96,20 @@
       "raw": "{\n  \"email\": \"fmansim@test.com\",\n  \"password\": \"123456\"\n}",
       "form": []
     },
-    "tests": []
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "set-env-var",
+        "custom": "json.auth.accessToken",
+        "action": "setto",
+        "value": "{{accessToken}}"
+      }
+    ]
   },
   {
     "_id": "1a3ff828-d946-4bf8-a862-7fe626e458a6",

@@ -4,6 +4,7 @@ export const LoginSchema = new Schema({
   email: {
     type: String,
     email: true,
+    required: true,
   },
   password: {
     type: String,
@@ -16,6 +17,7 @@ export const registerSchema = new Schema({
   email: {
     type: String,
     email: true,
+    required: true,
   },
   password: {
     type: String,

@@ -1,0 +1,10 @@
+{
+  "name": "shopping-app",
+  "version": "0.0.1",
+  "scripts": {
+    "flush":"docker compose down",
+    "docker:build": "npm run flush && docker compose -p $npm_package_name up -d --force-recreate --build",
+    "docker:restart": "npm run flush  && docker compose --project-name $npm_package_name up -d --build",
+    "docker:recreate": "docker compose down --rmi all && docker compose --project-name $npm_package_name up -d --build"
+  }
+}

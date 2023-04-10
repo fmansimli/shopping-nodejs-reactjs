@@ -1,21 +1,36 @@
 version: "3.4"
 
 services:
-  # myapp:
-  #   build: .
-  #   container_name: myapp
-  #   restart: always
-  #   ports:
-  #     - "3001:3030"
-  #   depends_on:
-  #     - db
-  #     - pgadmin
-  #   environment:
-  #     - NODE_ENV=production
-  #   networks:
-  #     - shopping-net
+  frontend:
+    build: ./frontend-react/
+    container_name: frontend-cont
+    restart: always
+    ports:
+      - "8080:3000"
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=production
+    networks:
+      shopping-net:
+        ipv4_address: 172.16.238.10
 
-  db:
+  backend:
+    build: ./backend-nest/
+    container_name: backend-cont
+    restart: always
+    ports:
+      - "3001:3000"
+    depends_on:
+      - database
+      - pgadmin
+    environment:
+      - TEST_VARIABLE=variable-name
+    networks:
+      shopping-net:
+        ipv4_address: 172.16.238.11
+
+  database:
     image: postgres
     restart: always
     environment:
@@ -28,7 +43,8 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - shopping-net
+      shopping-net:
+        ipv4_address: 172.16.238.12
 
   pgadmin:
     image: dpage/pgadmin4
@@ -39,9 +55,9 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
-      - db
+      - database
     networks:
       - shopping-net
 
@@ -52,3 +68,7 @@ volumes:
 networks:
   shopping-net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.238.0/24
+          gateway: 172.16.238.1

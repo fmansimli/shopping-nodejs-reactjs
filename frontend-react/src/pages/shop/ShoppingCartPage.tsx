@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-
-import { http } from "../../http/http";
 
 import { cartState } from "../../store/cart.state";
 
@@ -12,7 +10,6 @@ interface ICartData {
 
 function ShoppingCardPage() {
   const [cartData, setCartData] = useRecoilState(cartState);
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -60,24 +57,7 @@ function ShoppingCardPage() {
 
   const clearHandler = () => {
     setCartData({ items: [] });
-  };
-  const purchaseHandler = async () => {
-    try {
-      const items = cartData.items.map(item => {
-        const { title, price, ...rest } = item;
-        return { ...rest, price: Number(price) };
-      });
-
-      setLoading(true);
-      const { data } = await http.post("/api/orders", { items });
-      setCartData({ items: [] });
-      localStorage.removeItem("cart");
-      navigate("/orders");
-    } catch (error) {
-      alert(JSON.stringify(error, null, 2));
-    } finally {
-      setLoading(false);
-    }
+    localStorage.setItem("cart", JSON.stringify({ items: [] }));
   };
 
   return (
@@ -86,19 +66,22 @@ function ShoppingCardPage() {
         cartData.items.map((item, index) => (
           <div key={index} className="border-2 border-green-700 p-5 ">
             <div className="my-2 flex items-center justify-between px-5">
-              <span className="mr-5">{item.title}</span>
+              <span className="mr-5">{item.name}</span>
               <span>
                 total: <span>{item.price * item.quantity} $</span>
               </span>
               <div>
                 <button
-                  className="bg-gray-400 p-2 text-white"
+                  className="bg-gray-400 px-2 text-white"
                   onClick={() => changeCount(item, -1)}
                 >
                   -
                 </button>
                 <span className="mx-2">{item.quantity}</span>
-                <button className="bg-gray-400 p-2 text-white" onClick={() => changeCount(item, 1)}>
+                <button
+                  className="bg-gray-400 px-2 text-white"
+                  onClick={() => changeCount(item, 1)}
+                >
                   +
                 </button>
               </div>
@@ -106,14 +89,20 @@ function ShoppingCardPage() {
           </div>
         ))
       ) : (
-        <div className="flex h-full w-full items-center justify-center">cart is empty!</div>
+        <div className="flex h-full w-full flex-col items-center justify-center gap-5">
+          <div className="font-bold text-lg">cart is empty!</div>
+          <div className="text-lg text-blue-700">
+            start by adding some <span className="font-semibold text-black">products</span>, go to -
+            {"> "}
+            <Link className="px-2 text-lg text-red-600" to="/products">
+              Products
+            </Link>
+          </div>
+        </div>
       )}
       {cartData.items.length && (
         <div className="flex flex-row-reverse items-center gap-5">
-          <button className="rounded-sm bg-purple-600 p-2 text-white" onClick={purchaseHandler}>
-            {loading ? "Loading..." : "purchase"}
-          </button>
-          <button className="rounded-sm bg-red-800 p-2 text-white" onClick={clearHandler}>
+          <button className="rounded-sm bg-red-800 px-6 py-2 text-white" onClick={clearHandler}>
             clear
           </button>
         </div>

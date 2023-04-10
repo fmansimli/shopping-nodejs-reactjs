@@ -1,18 +1,23 @@
 FROM node:18-alpine
 
-WORKDIR /apps/nestjs-app
+WORKDIR /apps/shopping-node-react
 
-ENV BASE_URL http://localhost:3000
-
-RUN npm install -g pm2
+#RUN npm install -g pm2
 
 COPY package.json .
 RUN npm install
 
 COPY . .
 
-EXPOSE 3030
+ENV DB_HOST 172.16.238.12
+ENV DB_PORT 5432
+ENV DB_NAME shopdb
+ENV DB_USER postgres
+ENV DB_PASSWORD 12345
+ENV JWT_SECRET extremly-secret-key
 
-RUN npm run build-image
+EXPOSE 3000
+
+RUN npm run build
 
 CMD ["npm","start"]

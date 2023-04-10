@@ -1,11 +1,17 @@
-FROM node:18 as builder 
+FROM node:18-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /apps/shopping-node-react
 
-ENV NEXT_PUBLIC_HOST_URL https://jsonplaceholder.typicode.com
+COPY package.json .
+RUN npm install
+
+COPY . .
 
 
-COPY ["package.json", "./"]
+EXPOSE 3000
 
+ENV VITE_APP_SERVER_URL http://172.16.238.11:3000
 
+RUN npm run build
 
+CMD ["npm","run","serve"]

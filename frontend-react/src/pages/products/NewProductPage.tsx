@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import { http } from "../../http/http";
 import { IProduct } from "../../models";
 
@@ -10,16 +12,16 @@ const NewProductPage = () => {
 
   const submitHandler = async (product: Partial<IProduct>) => {
     try {
-      const { data } = await http.post("/api/products", product);
+      await http.post("/api/products", product);
       navigate("/products");
-    } catch (error) {
-      alert(JSON.stringify(error, null, 2));
+    } catch (error: any) {
+      toast(error.message, { type: "error" });
     }
   };
 
   return (
-    <div>
-      <div className="ml-10 w-1/2">
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="w-1/2 md:w-[70%] lg:w-1/2 2xl:w-1/2 ">
         <ProductForm formTitle="New Product" buttonName="create" onSubmit={submitHandler} />
       </div>
     </div>

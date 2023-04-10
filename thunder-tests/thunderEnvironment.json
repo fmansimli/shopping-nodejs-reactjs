@@ -13,7 +13,7 @@
       },
       {
         "name": "accessToken",
-        "value": "accessToken"
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJmbWFuc2ltQHRlc3QuY29tIiwiY2xhaW1zIjpbImFsbCJdLCJpYXQiOjE2ODExMDI3NzcsImV4cCI6MTY4MTExMzU3N30._nk5Oo7aPj-dEYqdgHf1e56190v-so0CCmtDL4HfN6Q"
       }
     ]
   }

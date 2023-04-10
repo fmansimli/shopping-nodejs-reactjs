@@ -59,12 +59,12 @@ function App() {
                   </Fragment>
                 ) : (
                   <Fragment>
-                    <Route path="/" element={<HomePage />} />
                     <Route path="/auth/login" element={<LoginPage />} />
                     <Route path="/auth/register" element={<RegisterPage />} />
                   </Fragment>
                 )}
-
+                
+                <Route path="/" element={<HomePage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </main>

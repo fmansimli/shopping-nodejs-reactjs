@@ -1,68 +1,76 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
+import { Link } from "react-router-dom";
 
+import useSWR from "swr";
 import { http } from "../../http/http";
+
+import { toast } from "react-toastify";
 
 import { IProduct } from "../../models";
 
 import ProductItem from "../../components/products/ProductItem";
 import { Loading, MyModal } from "../../components/ui/";
 
-import { cartState, cartSelector } from "../../store/cart.state";
+import { cartState } from "../../store/cart.state";
 
 function ProductsPage() {
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const { data: products, error, isLoading, mutate } = useSWR("/api/products");
+
+  const [quantity, setQuantity] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const [cartData, setCartData] = useRecoilState(cartState);
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+  const changeCount = (step: number) => {
+    if (step === -1 && quantity === 0) return;
+    setQuantity(old => old + step);
+  };
 
-  async function getProducts() {
-    try {
-      setLoading(true);
-      const { data } = await http.get("/api/products");
-      setProducts(data.body.products);
-    } catch (error: any) {
-      alert(JSON.stringify(error, null, 2));
-    } finally {
-      setLoading(false);
-    }
-  }
+  const clickHandler = (id: number) => {
+    setSelectedProduct(products.find((p: IProduct) => p.id === id));
+    setModalVisible(true);
+  };
 
   const deleteHandler = async (id: number) => {
-    if (!window.confirm("are you sure?")) {
+    if (!window.confirm("are you sure do you want to delete?")) {
       return;
     }
 
     try {
-      const { data } = await http.delete("/api/products/" + id);
-      setProducts(old => old.filter(p => p.id !== id));
-    } catch (error) {
-      alert(JSON.stringify(error, null, 2));
+      setLoading(true);
+      await http.delete("/api/products/" + id);
+      mutate();
+    } catch (error: any) {
+      toast(error.message, { type: "error" });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const addToCartHandler = async (product: IProduct) => {
-    const propmt = window.prompt("enter the quantity!");
-    if (propmt == undefined) return;
-    if (propmt === "") {
-      return alert("quantity can't be empty");
-    }
+  const addOrRemoveHandler = async (result: boolean | undefined) => {
+    setModalVisible(false);
+
+    if (result === undefined) return;
+
+    const product = { ...selectedProduct };
+
     try {
-      if (isNaN(Number(propmt))) {
-        return alert("input is not correct!");
-      }
-      const quantity = Number(propmt);
-
-      if (quantity <= 0) {
-        return alert("input should be greather than 0!");
-      }
-
       let items: any[] = [];
+
+      if (!result) {
+        setCartData(old => {
+          items = old.items.filter(item => item.productId !== product.id);
+          return { items };
+        });
+        localStorage.setItem("cart", JSON.stringify({ items }));
+        return;
+      }
+
+      if (quantity <= 0) return;
+
       setCartData(old => {
         let exits = false;
 
@@ -74,49 +82,76 @@ function ProductsPage() {
           return item;
         });
         if (!exits) {
-          const { id, title, price } = product;
-          items.push({ productId: id, price, title, quantity });
+          const { id, name, price } = product;
+          items.push({ productId: id, price, name, quantity });
         }
 
         return { items };
       });
       localStorage.setItem("cart", JSON.stringify({ items }));
-    } catch (error) {
-      alert(JSON.stringify(error, null, 2));
+    } catch (error: any) {
+      toast(error.message, { type: "error" });
+    } finally {
+      setQuantity(0);
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return <Loading fallback="products loading..." />;
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <div>something went wrong!</div>
+      </div>
+    );
   }
 
   return (
     <div className="h-full">
       {products.length ? (
-        <div className="flex flex-wrap gap-5">
+        <div className="flex flex-col gap-5">
           {products.map((product: IProduct) => (
             <ProductItem
               product={product}
               key={product.id}
               onDelete={deleteHandler}
-              onAddToCart={addToCartHandler}
+              onClick={clickHandler}
             />
           ))}
         </div>
       ) : (
-        <div className="flex h-full w-full items-center justify-center">no products found!</div>
+        <div className="flex h-full w-full flex-col items-center justify-center gap-8">
+          <div className="text-xl font-semibold text-gray-800">No Products in Database!</div>
+          <div className="text-lg text-blue-700">
+            go to admin or click -{"> "}
+            <Link className="px-2 text-lg text-red-600" to="/products/new">
+              New Product
+            </Link>
+          </div>
+        </div>
       )}
       <MyModal
         visible={modalVisible}
-        title="Test modal!"
-        buttonText="got it baby!"
-        onClose={() => setModalVisible(false)}
+        title=""
+        buttonText="add to cart"
+        onEnded={result => addOrRemoveHandler(result)}
       >
-        <div className="mt-2">
-          <p className="text-sm text-gray-500">
-            Your payment has been successfully submitted. We’ve sent you an email with all of the
-            details of your order.
-          </p>
+        <div className="flex items-center justify-between">
+          <div className="text-lg font-bold">
+            {selectedProduct?.name}{" "}
+            <span className="text-red-600">({selectedProduct?.price}$)</span>
+          </div>
+          <div className="">
+            <button className="bg-gray-400 px-2 text-white" onClick={() => changeCount(-1)}>
+              -
+            </button>
+            <span className="mx-3">{quantity}</span>
+            <button className="bg-gray-400 px-2 text-white" onClick={() => changeCount(1)}>
+              +
+            </button>
+          </div>
         </div>
       </MyModal>
     </div>
