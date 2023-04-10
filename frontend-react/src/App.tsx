@@ -103,7 +103,7 @@ function App() {
       <MyModal
         visible={!!log.items.length}
         title="logs.."
-        rightButtonText="don't show to anyone again"
+        rightButtonText="don't show again"
         leftButtonText="ok, got it"
         onEnded={modalHandler}
       >

@@ -7,7 +7,6 @@ RUN npm install
 
 COPY . .
 
-
 EXPOSE 3000
 
 ENV VITE_APP_SERVER_URL http://172.16.238.11:3000
