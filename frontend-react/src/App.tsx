@@ -104,7 +104,7 @@ function App() {
         visible={!!log.items.length}
         title="logs.."
         rightButtonText="don't show to anyone again"
-        leftButtonText="don't show to me again"
+        leftButtonText="ok, got it"
         onEnded={modalHandler}
       >
         <div className="flex flex-col items-center gap-3">

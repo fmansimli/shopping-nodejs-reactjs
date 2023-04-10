@@ -6,7 +6,7 @@ services:
     container_name: frontend-cont
     restart: always
     ports:
-      - "8080:3000"
+      - "8082:3000"
     depends_on:
       - backend
     environment:
@@ -25,7 +25,7 @@ services:
       - database
       - pgadmin
     environment:
-      - TEST_VARIABLE=variable-name
+      - NODE_ENV=production
     networks:
       shopping-net:
         ipv4_address: 172.16.238.11
@@ -55,7 +55,7 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     ports:
-      - "8081:80"
+      - "8080:80"
     depends_on:
       - database
     networks:
