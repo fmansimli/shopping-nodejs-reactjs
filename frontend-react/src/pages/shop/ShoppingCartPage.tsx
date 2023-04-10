@@ -52,6 +52,7 @@ function ShoppingCardPage() {
         return { items };
       });
     }
+
     localStorage.setItem("cart", JSON.stringify({ items }));
   };
 
@@ -90,7 +91,7 @@ function ShoppingCardPage() {
         ))
       ) : (
         <div className="flex h-full w-full flex-col items-center justify-center gap-5">
-          <div className="font-bold text-lg">cart is empty!</div>
+          <div className="text-lg font-bold">cart is empty!</div>
           <div className="text-lg text-blue-700">
             start by adding some <span className="font-semibold text-black">products</span>, go to -
             {"> "}

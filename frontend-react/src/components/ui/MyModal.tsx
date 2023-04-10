@@ -7,17 +7,18 @@ interface IProps {
   onEnded: (result: boolean | undefined) => void;
 
   title: string;
-  buttonText: string;
+  rightButtonText: string;
+  leftButtonText: string;
   children: React.ReactNode;
 }
 
-const MyModal: FC<IProps> = ({ visible, onEnded, title, children, buttonText }) => {
+const MyModal: FC<IProps> = props => {
   const closeHandler = (result: boolean | undefined) => {
-    onEnded(result);
+    props.onEnded(result);
   };
 
   return (
-    <Transition appear show={visible} as={Fragment}>
+    <Transition appear show={props.visible} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => closeHandler(undefined)}>
         <Transition.Child
           as={Fragment}
@@ -47,14 +48,14 @@ const MyModal: FC<IProps> = ({ visible, onEnded, title, children, buttonText }) 
                            overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
               >
                 <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                  {title}
+                  {props.title}
                 </Dialog.Title>
 
-                {children}
+                {props.children}
 
                 <div className="mt-4 flex items-center gap-6">
-                  <MyButton onClick={() => closeHandler(false)}>remove</MyButton>
-                  <MyButton onClick={() => closeHandler(true)}>{buttonText}</MyButton>
+                  <MyButton onClick={() => closeHandler(false)}>{props.leftButtonText}</MyButton>
+                  <MyButton onClick={() => closeHandler(true)}>{props.rightButtonText}</MyButton>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

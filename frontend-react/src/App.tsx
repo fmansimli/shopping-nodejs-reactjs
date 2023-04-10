@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useRecoilStateLoadable, useRecoilValue } from "recoil";
 
@@ -21,16 +21,37 @@ import NotFoundPage from "./pages/NotFoundPage";
 import AdminPage from "./pages/admin/AdminPage";
 
 import { ToastContainer } from "react-toastify";
+import { MyModal } from "./components/ui";
 
 function App() {
   const [auth, setAuth] = useRecoilStateLoadable(initSelector);
   const token = useRecoilValue(tokenSelector);
+  const [log, setLog] = useState({ items: [] });
 
   useEffect(() => {
     if (auth.state === "hasValue") {
       setAuth(auth.contents);
     }
   }, [auth.state]);
+
+  useEffect(() => {
+    const _log = sessionStorage.getItem("log");
+    const log = localStorage.getItem("log");
+
+    if (log && !_log) {
+      setLog(JSON.parse(log));
+    }
+  }, []);
+
+  const modalHandler = (result: boolean | undefined) => {
+    setLog({ items: [] });
+    if (result === undefined) return;
+
+    if (result) {
+      sessionStorage.removeItem("log");
+      localStorage.removeItem("log");
+    }
+  };
 
   return (
     <BrowserRouter>
@@ -63,7 +84,7 @@ function App() {
                     <Route path="/auth/register" element={<RegisterPage />} />
                   </Fragment>
                 )}
-                
+
                 <Route path="/" element={<HomePage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
@@ -77,6 +98,19 @@ function App() {
         </div>
       )}
       <ToastContainer />
+      <MyModal
+        visible={!!log.items.length}
+        title="logs.."
+        rightButtonText="don't show again"
+        leftButtonText="ok!"
+        onEnded={modalHandler}
+      >
+        <div className="flex flex-col items-center gap-3">
+          {log.items.map((item: any, index) => (
+            <span key={index}>{item.message}</span>
+          ))}
+        </div>
+      </MyModal>
     </BrowserRouter>
   );
 }

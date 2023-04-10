@@ -60,12 +60,25 @@ function ProductsPage() {
     try {
       let items: any[] = [];
 
+      const _log = localStorage.getItem("log");
+
+      let log: any = _log ? JSON.parse(_log) : { items: [] };
+
       if (!result) {
+        log.items.push({
+          name: selectedProduct?.name,
+          productId: selectedProduct?.id,
+          message: `someone completely deleted (${selectedProduct?.name}) from cart! `,
+        });
+
         setCartData(old => {
           items = old.items.filter(item => item.productId !== product.id);
           return { items };
         });
+
         localStorage.setItem("cart", JSON.stringify({ items }));
+        localStorage.setItem("log", JSON.stringify(log));
+        sessionStorage.setItem("log", JSON.stringify(log));
         return;
       }
 
@@ -88,6 +101,16 @@ function ProductsPage() {
 
         return { items };
       });
+
+      log.items.push({
+        name: selectedProduct?.name,
+        productId: selectedProduct?.id,
+        message: `someone added ${quantity} (${selectedProduct?.name}) to cart! `,
+      });
+
+      localStorage.setItem("log", JSON.stringify(log));
+      sessionStorage.setItem("log", JSON.stringify(log));
+
       localStorage.setItem("cart", JSON.stringify({ items }));
     } catch (error: any) {
       toast(error.message, { type: "error" });
@@ -135,7 +158,8 @@ function ProductsPage() {
       <MyModal
         visible={modalVisible}
         title=""
-        buttonText="add to cart"
+        leftButtonText="remove"
+        rightButtonText="add to cart"
         onEnded={result => addOrRemoveHandler(result)}
       >
         <div className="flex items-center justify-between">
